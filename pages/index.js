@@ -21,7 +21,7 @@ export default function Home() {
 
   const { data: session } = useSession();
   useEffect(() => {
-    if(session){
+    
     const fetchCounts = async () => {
       const orderCountResponse = await fetch("/api/count/orders");
       const productCountResponse = await fetch("/api/count/products");
@@ -35,8 +35,9 @@ export default function Home() {
       setCategoryCount(categoryCountData.count);
     };
 
-  }
-    fetchCounts();
+    if(session){
+      fetchCounts();
+    }
   }, []);
 
   if(session == 'undefined') return (
