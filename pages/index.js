@@ -20,8 +20,8 @@ export default function Home() {
   }, [loading]);
 
   const { data: session } = useSession();
-if(session){
   useEffect(() => {
+    if(session){
     const fetchCounts = async () => {
       const orderCountResponse = await fetch("/api/count/orders");
       const productCountResponse = await fetch("/api/count/products");
@@ -35,9 +35,9 @@ if(session){
       setCategoryCount(categoryCountData.count);
     };
 
+  }
     fetchCounts();
   }, []);
-}
 
   if(session == 'undefined') return (
     <Layout>
