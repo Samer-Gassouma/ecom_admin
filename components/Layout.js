@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import { useState } from "react";
 import Logo from "@/components/Logo";
 import Loading from "@/pages/Loading";
+import Providers from "@/pages/Providers";
 
 export default function Layout({ children }) {
   const [showNav, setShowNav] = useState(false);
@@ -40,6 +41,7 @@ export default function Layout({ children }) {
   }
 
   return (
+    <Providers>
     <div className="bg-bgGray min-h-screen ">
       <div className="block md:hidden flex items-center p-4">
         <button onClick={() => setShowNav(true)}>
@@ -65,5 +67,6 @@ export default function Layout({ children }) {
         <div className="flex-grow p-4">{children}</div>
       </div>
     </div>
+    </Providers>
   );
 }

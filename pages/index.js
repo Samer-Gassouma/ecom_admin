@@ -8,6 +8,8 @@ export default function Home() {
   const [orderCount, setOrderCount] = useState(0);
   const [productCount, setProductCount] = useState(0);
   const [categoryCount, setCategoryCount] = useState(0);
+  const [userCount, setUserCount] = useState(0);
+  const [groupProd, setGroupProd] = useState(0);
 
   useEffect(() => {
     if (loading) {
@@ -26,18 +28,23 @@ export default function Home() {
       const orderCountResponse = await fetch("/api/count/orders");
       const productCountResponse = await fetch("/api/count/products");
       const categoryCountResponse = await fetch("/api/count/categories");
+      const userCountResponse = await fetch("/api/count/users");
+      const groupProdResponse = await fetch("/api/count/Group_products");
 
       const orderCountData = await orderCountResponse.json();
       const productCountData = await productCountResponse.json();
       const categoryCountData = await categoryCountResponse.json();
+      const userCountData = await userCountResponse.json();
+      const groupProdData = await groupProdResponse.json();
       setOrderCount(orderCountData.count);
       setProductCount(productCountData.count);
       setCategoryCount(categoryCountData.count);
+      setUserCount(userCountData.count);
+      setGroupProd(groupProdData.count);
     };
 
-    if(session){
       fetchCounts();
-    }
+   
   }, []);
 
   if(session == 'undefined') return (
@@ -94,6 +101,20 @@ export default function Home() {
                 {categoryCount === 1 ? "category" : "categories"}
               </p>
             </div>
+            <div className="bg-gray-700 p-6 rounded-lg flex flex-col items-center justify-center">
+              <h3 className="text-lg font-semibold text-gray-200 mb-2">Users</h3>
+              <p className="text-gray-300 text-center">
+                Total: <span className="text-blue-400">{userCount}</span>{" "}
+                {userCount === 1 ? "user" : "users"}
+              </p>
+              </div>
+              <div className="bg-gray-700 p-6 rounded-lg flex flex-col items-center justify-center">
+              <h3 className="text-lg font-semibold text-gray-200 mb-2">Group Products</h3>
+              <p className="text-gray-300 text-center">
+                Total: <span className="text-blue-400">{groupProd}</span>{" "}
+                {groupProd === 1 ? "Group Product" : "Group Products"}
+              </p>
+              </div>
           </div>
         </div>
       </div>

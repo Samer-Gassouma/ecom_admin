@@ -9,6 +9,25 @@ export default function OrdersPage() {
       setOrders(response.data);
     });
   }, []);
+
+  const handleConfirme = (orderId) => {
+    axios.put(`/api/orders?id=${orderId}`).then(response => {
+      // Handle the response, if needed
+      setOrders(prevOrders => {
+        // Find the order that was confirmed
+        const updatedOrders = prevOrders.map(order => {
+          if (order._id === orderId) {
+            // Update the paid status to true
+            return { ...order, paid: true };
+          }
+          return order;
+        });
+        return updatedOrders;
+      });
+    });
+  };
+  
+
   return (
     <Layout>
       <h1>Orders</h1>
@@ -16,7 +35,7 @@ export default function OrdersPage() {
         <thead>
           <tr>
             <th>Date</th>
-            <th>Paid</th>
+            <th>Confirme</th>
             <th>Recipient</th>
             <th>Products</th>
           </tr>
@@ -28,12 +47,13 @@ export default function OrdersPage() {
             <td>{(new Date(order.createdAt)).toLocaleString()}
             </td>
             <td className={order.paid ? 'text-green-600' : 'text-red-600'}>
-              {order.paid ? 'YES' : 'NO'}
+              {order.paid ? 'YES' : 'NO'} 
+              <button className="btn btn-primary p-3 gap-3 m-5" onClick={()=> handleConfirme(order._id)} >Confirm</button>
             </td>
             <td>
-              {order.name} {order.email} {order.phone}<br />
-              {order.city} {order.postalCode} {order.country}<br />
-              {order.streetAddress}
+              Name : {order.name} <br></br> email : {order.email} <br></br> phone : {order.phone}<br />
+              city/postalCode/country : {order.city}  {order.postalCode} {order.country}<br />
+              address : {order.streetAddress}
             </td>
             <td>
               {order.line_items.map(l => (
