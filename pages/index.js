@@ -22,6 +22,7 @@ export default function Home() {
   }, [loading]);
 
   const { data: session } = useSession();
+
   useEffect(() => {
     
     const fetchCounts = async () => {
@@ -43,6 +44,7 @@ export default function Home() {
       setGroupProd(groupProdData.count);
     };
 
+    if (session)
       fetchCounts();
    
   }, []);
