@@ -11,27 +11,35 @@ export default function ProductForm({
   price:existingPrice,
   images:existingImages,
   category:assignedCategory,
+  tag:assignedTag,
   properties:assignedProperties,
 }) {
   const [title,setTitle] = useState(existingTitle || '');
   const [description,setDescription] = useState(existingDescription || '');
   const [category,setCategory] = useState(assignedCategory || '');
+  const [tag,setTag] = useState(assignedTag || []);
   const [productProperties,setProductProperties] = useState(assignedProperties || {});
   const [price,setPrice] = useState(existingPrice || '');
   const [images,setImages] = useState(existingImages || []);
   const [goToProducts,setGoToProducts] = useState(false);
   const [isUploading,setIsUploading] = useState(false);
   const [categories,setCategories] = useState([]);
+  const [tags,setTags] = useState([]);
   const router = useRouter();
   useEffect(() => {
     axios.get('/api/categories').then(result => {
       setCategories(result.data);
     })
   }, []);
+  useEffect(() => {
+    axios.get('/api/tag').then(result => {
+      setTags(result.data);
+    })
+  }, []);
   async function saveProduct(ev) {
     ev.preventDefault();
     const data = {
-      title,description,price,images,category,
+      title,description,price,images,category,tag,
       properties:productProperties
     };
     if (_id) {
@@ -96,6 +104,14 @@ export default function ProductForm({
                 onChange={ev => setCategory(ev.target.value)}>
           <option value="">Uncategorized</option>
           {categories.length > 0 && categories.map(c => (
+            <option key={c._id} value={c._id}>{c.name}</option>
+          ))}
+        </select>
+        <label>Tag</label>
+        <select value={tag}
+                onChange={ev => setTag(ev.target.value)}>
+          <option value="">Uncategorized</option>
+          {tags.length > 0 && tags.map(c => (
             <option key={c._id} value={c._id}>{c.name}</option>
           ))}
         </select>
