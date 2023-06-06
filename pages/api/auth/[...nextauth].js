@@ -3,7 +3,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '@/lib/mongodb';
 
-const adminEmails = ['samer.samm12@gmail.com', 'goldin2409@gmail.com','ayhembelhassen@gmail.com'];
+const adminEmails = ['samer.samm12@gmail.com', 'goldin2409@gmail.com','ayhembelhassen@gmail.com','walamaz55@gmail.com'];
 
 const isAuthorizedEmail = (email) => {
   return adminEmails.includes(email);
