@@ -89,11 +89,11 @@ export default function ProductForm({
     });
   }
   
-  function setGroupProp(propName, value) {
+  function setGroupProp(propName, value,index) {
     if(value == true){
       setGroup_Prod((prev) => {
         const newProductProps = { ...prev };
-        newProductProps[propName] = value;
+        newProductProps[index] = propName;
         return newProductProps;
       });
     }
@@ -205,7 +205,7 @@ export default function ProductForm({
       />
       <label>Properties</label>
       <div className="flex flex-wrap gap-1">
-        {products.map((p) => (
+        {products.map((p,index) => (
           <div
             key={p._id}
             className="bg-white p-2 shadow-sm rounded-sm border border-gray-200"
@@ -213,7 +213,7 @@ export default function ProductForm({
             <input
               type="checkbox"
               checked={Group_Prod[p._id]}
-              onChange={(ev) => setGroupProp(p._id, ev.target.checked)}
+              onChange={(ev) => setGroupProp(p._id, ev.target.checked,index)}
             />
             <label className="ml-2">{p.title}</label>
             <img src={p.images[0]} alt="" className="w-16 h-16 rounded-lg" />
